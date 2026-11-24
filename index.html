@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Arkadaşlarınla süsleyebileceğin özel yılbaşı dilek ağacı." />
+    <title>Bizim Dilek Ağacımız</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <div class="snow" aria-hidden="true"></div>
+
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Dilek Ağacı ana sayfa">
+          <span class="brand-mark">✦</span>
+          <span>Bizim Dilek Ağacımız</span>
+        </a>
+        <div id="user-area" class="user-area hidden">
+          <span id="user-email" class="user-email"></span>
+          <button id="logout-button" class="button button-ghost" type="button">Çıkış</button>
+        </div>
+      </header>
+
+      <section id="auth-view" class="auth-layout">
+        <div class="intro-panel">
+          <p class="eyebrow">SADECE DAVETLİLERE AÇIK</p>
+          <h1>Birlikte süslenen<br /><em>küçük bir mutluluk.</em></h1>
+          <p class="intro-copy">
+            Dileğini as, hediyeni bırak, sevdiğin insanlarla aynı ağacın etrafında buluş.
+          </p>
+          <div id="invite-note" class="invite-note hidden">
+            <span>🎟️</span>
+            <div>
+              <strong>Bir ağaca davetlisin!</strong>
+              <p>Giriş yaptıktan sonra otomatik olarak katılacaksın.</p>
+            </div>
+          </div>
+          <div class="mini-tree" aria-hidden="true">
+            <span class="mini-star">★</span>
+            <span class="mini-layer layer-one"></span>
+            <span class="mini-layer layer-two"></span>
+            <span class="mini-layer layer-three"></span>
+            <span class="mini-trunk"></span>
+          </div>
+        </div>
+
+        <div class="auth-card">
+          <div class="auth-tabs" role="tablist" aria-label="Hesap işlemleri">
+            <button class="auth-tab active" data-mode="signin" role="tab" type="button">Giriş yap</button>
+            <button class="auth-tab" data-mode="signup" role="tab" type="button">Hesap aç</button>
+          </div>
+          <div class="auth-heading">
+            <p class="eyebrow">HOŞ GELDİN</p>
+            <h2 id="auth-title">Ağacına dön</h2>
+            <p id="auth-subtitle">Dileklerini görmek için hesabına giriş yap.</p>
+          </div>
+          <form id="auth-form" class="stack-form">
+            <label>
+              E-posta
+              <input id="email" type="email" autocomplete="email" placeholder="sen@example.com" required />
+            </label>
+            <label>
+              Şifre
+              <input id="password" type="password" autocomplete="current-password" minlength="6" placeholder="En az 6 karakter" required />
+            </label>
+            <button id="auth-submit" class="button button-primary button-wide" type="submit">Giriş yap</button>
+          </form>
+          <p id="auth-message" class="form-message" role="status"></p>
+          <p class="privacy-copy">Ağacın herkese açık değildir. Yalnızca davet linkini kullanan kişiler katılabilir.</p>
+        </div>
+      </section>
+
+      <section id="app-view" class="app-view hidden">
+        <div id="empty-state" class="empty-state hidden">
+          <div class="empty-icon">🎄</div>
+          <p class="eyebrow">İLK ADIM</p>
+          <h1>Kendi dilek ağacını oluştur</h1>
+          <p>Sonra özel linki arkadaşlarınla paylaş; giriş yapan herkes ağacına katılsın.</p>
+          <form id="create-tree-form" class="inline-form">
+            <input id="tree-name" type="text" maxlength="80" value="Bizim Dilek Ağacımız" aria-label="Ağaç adı" required />
+            <button class="button button-primary" type="submit">Ağacı oluştur</button>
+          </form>
+          <p id="create-message" class="form-message" role="status"></p>
+        </div>
+
+        <div id="tree-dashboard" class="dashboard hidden">
+          <section class="tree-stage" aria-labelledby="tree-title">
+            <div class="stage-heading">
+              <div>
+                <p class="eyebrow">ORTAK AĞACIMIZ</p>
+                <h1 id="tree-title">Bizim Dilek Ağacımız</h1>
+              </div>
+              <button id="refresh-button" class="icon-button" type="button" aria-label="Ağacı yenile" title="Yenile">↻</button>
+            </div>
+
+            <div id="tree-canvas" class="tree-canvas" aria-label="Dilek ağacı">
+              <div class="moon" aria-hidden="true"></div>
+              <div class="ground" aria-hidden="true"></div>
+              <div class="christmas-tree" aria-hidden="true">
+                <span class="tree-star">★</span>
+                <span class="tree-layer tree-layer-one"></span>
+                <span class="tree-layer tree-layer-two"></span>
+                <span class="tree-layer tree-layer-three"></span>
+                <span class="tree-trunk"></span>
+              </div>
+              <div id="tree-items" class="tree-items"></div>
+              <p id="tree-empty-hint" class="tree-empty-hint">İlk süsü sen as ✨</p>
+            </div>
+          </section>
+
+          <aside class="control-panel">
+            <section id="invite-card" class="panel-card owner-only hidden">
+              <div class="card-heading">
+                <span class="card-icon">🔗</span>
+                <div>
+                  <p class="eyebrow">DAVET LİNKİ</p>
+                  <h2>Arkadaşlarını çağır</h2>
+                </div>
+              </div>
+              <p>Tek bir özel link oluştur. Linki kullanan herkes giriş yaptıktan sonra ağaca katılır.</p>
+              <button id="create-invite-button" class="button button-secondary button-wide" type="button">Davet linki oluştur</button>
+              <div id="invite-result" class="invite-result hidden">
+                <input id="invite-url" type="text" readonly aria-label="Davet linki" />
+                <button id="copy-invite-button" class="button button-primary" type="button">Kopyala</button>
+              </div>
+              <p id="invite-message" class="form-message" role="status"></p>
+            </section>
+
+            <section class="panel-card">
+              <div class="card-heading">
+                <span class="card-icon">✨</span>
+                <div>
+                  <p class="eyebrow">YENİ BİR ŞEY EKLE</p>
+                  <h2>Ağaca as</h2>
+                </div>
+              </div>
+              <form id="item-form" class="stack-form compact-form">
+                <label>
+                  Ne ekliyorsun?
+                  <select id="item-type">
+                    <option value="ornament">Süs</option>
+                    <option value="wish">Dilek</option>
+                    <option value="gift">Hediye</option>
+                  </select>
+                </label>
+                <label>
+                  Mesajın
+                  <textarea id="item-message" maxlength="500" rows="3" placeholder="Yeni yılda..." required></textarea>
+                </label>
+                <button class="button button-primary button-wide" type="submit">Ağaca ekle</button>
+              </form>
+              <p id="item-form-message" class="form-message" role="status"></p>
+            </section>
+
+            <section class="panel-card wishes-card">
+              <div class="card-heading">
+                <span class="card-icon">💌</span>
+                <div>
+                  <p class="eyebrow">AĞAÇTAKİLER</p>
+                  <h2>Dilekler ve hediyeler</h2>
+                </div>
+              </div>
+              <div id="item-list" class="item-list"></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./config.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
