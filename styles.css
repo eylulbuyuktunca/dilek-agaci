@@ -23,10 +23,14 @@ body {
   min-height: 100vh;
   color: var(--ink);
   background:
-    radial-gradient(circle at 7% 16%, rgba(250,196,215,.56), transparent 23rem),
-    radial-gradient(circle at 93% 10%, rgba(224,218,255,.62), transparent 25rem),
-    radial-gradient(circle at 82% 88%, rgba(214,239,218,.58), transparent 24rem),
-    linear-gradient(145deg, #fffdfc 0%, #fff7fa 48%, #fffdfb 100%);
+    linear-gradient(rgba(255,255,255,.20), rgba(255,255,255,.20)),
+    repeating-linear-gradient(
+      90deg,
+      #fffafb 0,
+      #fffafb 54px,
+      #fce8f0 54px,
+      #fce8f0 108px
+    );
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
 }
@@ -44,11 +48,11 @@ button { cursor: pointer; }
 }
 .snow {
   background-image:
-    radial-gradient(circle, rgba(222,145,176,.35) 1.5px, transparent 2px),
-    radial-gradient(circle, rgba(171,151,216,.24) 1.5px, transparent 2px);
+    radial-gradient(circle, rgba(220,134,163,.20) 1.5px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,.75) 1.5px, transparent 2px);
   background-position: 18px 22px, 78px 92px;
   background-size: 146px 146px, 212px 212px;
-  opacity: .48;
+  opacity: .32;
 }
 .snow::before {
   background:
